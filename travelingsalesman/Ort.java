@@ -1,8 +1,7 @@
 package travelingsalesman;
 
 public class Ort {
-    private Ort(){
-        System.out.println("Test1");
+    public static void main(String[] args) {
+        System.out.println("Ort Klasse");
     }
-
 }
