@@ -20,7 +20,6 @@ public final class Matrix {
         try {
             File file = new File(name);
             Scanner reader = new Scanner(file);
-
             while(reader.hasNextLine()){
                 String data = reader.nextLine();
                 spitData = data.split(",");
@@ -48,10 +47,11 @@ public final class Matrix {
         for (double[] doubles : matrix)
         {
             for (double aDouble : doubles)
-            {
                 System.out.print(aDouble);
-            }
+
             System.out.println();
         }
     }
+
+    public double getDistance(int index1, int index2){ return matrix[index1][index2]; }
 }
