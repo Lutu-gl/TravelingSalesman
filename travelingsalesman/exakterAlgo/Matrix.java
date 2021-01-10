@@ -7,7 +7,6 @@ import java.util.Scanner;
 public final class Matrix {
     private double[][] matrix;
 
-
     public Matrix(){
     }
 
@@ -55,5 +54,9 @@ public final class Matrix {
 
     public double getDistance(int index1, int index2){
         return matrix[index1][index2];
+    }
+
+    public double getMatrixSize(){
+        return matrix.length;
     }
 }
