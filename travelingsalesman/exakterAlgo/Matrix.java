@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public final class Matrix {
-    private double[][] matrix = new double[1000][1000];
+    private double[][] matrix;
 
 
     public Matrix(){
@@ -24,6 +24,7 @@ public final class Matrix {
             while(reader.hasNextLine()){
                 String data = reader.nextLine();
                 spitData = data.split(",");
+                matrix = new double[spitData.length][spitData.length];
 
                 for(String ausgabe : spitData){
                     System.out.print(Double.parseDouble(ausgabe) + " ");
@@ -34,17 +35,23 @@ public final class Matrix {
                 row++;
                 column=0;
             }
-
             reader.close();
         } catch(FileNotFoundException e){
             e.printStackTrace();
             return false;
         }
 
-
         return true;
     }
-
-
-
+    public void printMatrix()
+    {
+        for (double[] doubles : matrix)
+        {
+            for (double aDouble : doubles)
+            {
+                System.out.print(aDouble);
+            }
+            System.out.println();
+        }
+    }
 }
