@@ -51,4 +51,9 @@ public final class Matrix {
             System.out.println();
         }
     }
+
+
+    public double getDistance(int index1, int index2){
+        return matrix[index1][index2];
+    }
 }
