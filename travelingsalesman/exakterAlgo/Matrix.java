@@ -9,47 +9,44 @@ public final class Matrix {
 
 
     public Matrix(){
-
     }
 
+    //Lest matrix von einer angegebene File ein und wandelt es in double matrix array um.
     public boolean readMatrixFromFile(String name){
-        String[] spitData;
-        int row = 0;        //Zeile
-        int column = 0;     //Spalte
+        String[] spitDataArray;
+        String data = "";
 
         try {
             File file = new File(name);
             Scanner reader = new Scanner(file);
-
             while(reader.hasNextLine()){
-                String data = reader.nextLine();
-                spitData = data.split(",");
-                matrix = new double[spitData.length][spitData.length];
-
-                for(String ausgabe : spitData){
-                    System.out.print(Double.parseDouble(ausgabe) + " ");
-                    matrix[row][column] = Double.parseDouble(ausgabe);
-                    column++;
-                }
-                System.out.println();
-                row++;
-                column=0;
+                data += reader.nextLine();
             }
+            spitDataArray = data.split(",");
+            int rootNum = (int) Math.sqrt(spitDataArray.length);
+            matrix = new double[rootNum][rootNum];
+
+            for (int i = 0; i < rootNum; i++) {
+                for (int n = 0; n < rootNum; n++) {
+                    matrix[i][n] = Double.parseDouble(spitDataArray[ (rootNum-1)*i + n +i ]);
+                }
+            }
+            
             reader.close();
         } catch(FileNotFoundException e){
             e.printStackTrace();
             return false;
         }
 
+
         return true;
     }
-    public void printMatrix()
-    {
-        for (double[] doubles : matrix)
-        {
-            for (double aDouble : doubles)
-            {
-                System.out.print(aDouble);
+
+    //Printet die matrix
+    public void printMatrix() {
+        for (double[] doubles : matrix) {
+            for (double aDouble : doubles) {
+                System.out.print(aDouble + " ");
             }
             System.out.println();
         }

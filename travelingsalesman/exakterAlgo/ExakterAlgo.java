@@ -6,7 +6,7 @@ public class ExakterAlgo {
 
     public static void main(String[] args) {
         Matrix matrix = new Matrix();
-        matrix.readMatrixFromFile("C:\\Users\\Megaport\\IdeaProjects\\TravelingSalesman\\travelingsalesman\\exakterAlgo\\MatrixFile.csv");
+        matrix.readMatrixFromFile("E:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\exakterAlgo\\MatrixFile.csv");
         matrix.printMatrix();
 
     }
