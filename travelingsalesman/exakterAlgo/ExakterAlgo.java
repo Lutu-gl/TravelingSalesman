@@ -66,12 +66,6 @@ public class ExakterAlgo {
         }
         System.out.println("shortest distance " + shortestDistance);
 
-
-
-
-
-
-
         int[] array = new int[4];
         array[0] = 0;
         array[1] = 1;
