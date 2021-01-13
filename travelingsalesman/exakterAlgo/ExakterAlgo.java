@@ -10,12 +10,12 @@ public class ExakterAlgo {
 
     public static void main(String[] args) {
         Matrix matrix = new Matrix();
-        matrix.readMatrixFromFile("E:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\exakterAlgo\\MatrixFile.csv");
+        matrix.readMatrixFromFile("C:\\Users\\Megaport\\IdeaProjects\\TravelingSalesman\\travelingsalesman\\exakterAlgo\\MatrixFile.csv");
         matrix.printMatrix();
 
 
         double distance=0;
-        double shortestDistance=0;
+        double shortestDistance=Integer.MAX_VALUE;
 
         //Array mit Allen Orten erstellen:
         ArrayList<Ort> orte = new ArrayList<Ort>((int) matrix.getMatrixSize());
@@ -31,22 +31,40 @@ public class ExakterAlgo {
         }
 
         /*
-         !punkte
-         0123
-         
-         0132
-         0213
-         0231
-         0312
-         0321
-         */
-        int[][] route = new int[4][6];
+         01230
+         01320
+         02130
+         02310
+         03120
+         03210
+        */
 
-        System.out.println("orte " + orte.size());
-        for (int i = 0; i < orte.size(); i++) {
-            distance += matrix.getDistance( orte.get(route[i]).getIndex() , orte.get( (route[i]+1) % orte.size() ).getIndex()   );
+        int[][] route = new int[6][5];
+
+        route[0] = new int[]{0,1,2,3,0};
+        route[1] = new int[]{0,1,3,2,0};
+        route[2] = new int[]{0,2,1,3,0};
+        route[3] = new int[]{0,2,3,1,0};
+        route[4] = new int[]{0,3,1,2,0};
+        route[5] = new int[]{0,3,2,1,0};
+
+
+        System.out.println("orte " + 6);
+        for (int i = 0; i < 6; i++)
+        {
+            distance = 0;
+            System.out.println(i);
+            for (int j = 0; j < matrix.getMatrixSize(); j++)
+            {
+                System.out.print(route[i][j]);
+                System.out.println("," + route[i][j+1]);
+                distance += matrix.getDistance(orte.get(route[i][j]).getIndex() , orte.get((route[i][j+1])).getIndex());
+            }
+            System.out.println("distance:" + distance);
+            if(distance < shortestDistance)
+                shortestDistance = distance;
         }
-        System.out.println(distance);
+        System.out.println("shortest distance " + shortestDistance);
 
 
 
@@ -114,6 +132,4 @@ public class ExakterAlgo {
         System.out.println();
         //return array;
     }
-
-
 }
