@@ -2,6 +2,7 @@ package travelingsalesman.exakterAlgo;
 
 
 import java.lang.reflect.Array;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,10 +11,11 @@ public class ExakterAlgo {
 
     public static void main(String[] args) {
         Matrix matrix = new Matrix();
-        matrix.readMatrixFromFile("C:\\Users\\Megaport\\IdeaProjects\\TravelingSalesman\\travelingsalesman\\exakterAlgo\\MatrixFile.csv");
+        //matrix.readMatrixFromFile("C:\\Users\\Megaport\\IdeaProjects\\TravelingSalesman\\travelingsalesman\\exakterAlgo\\MatrixFile.csv");
+        matrix.readMatrixFromFile("E:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\exakterAlgo\\MatrixFile.csv");
         matrix.printMatrix();
 
-
+        int orteAnzahl = 4;
         double distance=0;
         double shortestDistance=Integer.MAX_VALUE;
 
@@ -23,58 +25,113 @@ public class ExakterAlgo {
             orte.add(new Ort());
         }
 
-
-        //Ort[] orte = new Ort[5];
-
         for (int i = 0; i < matrix.getMatrixSize(); i++) {
             orte.get(i).setIndex(i);
         }
 
-        /*
-         01230
-         01320
-         02130
-         02310
-         03120
-         03210
-        */
-
-        int[][] route = new int[6][5];
-
-        route[0] = new int[]{0,1,2,3,0};
-        route[1] = new int[]{0,1,3,2,0};
-        route[2] = new int[]{0,2,1,3,0};
-        route[3] = new int[]{0,2,3,1,0};
-        route[4] = new int[]{0,3,1,2,0};
-        route[5] = new int[]{0,3,2,1,0};
+        ArrayList<Integer> arrayList = new ArrayList<Integer>( Arrays.asList(0,1,2,3));
 
 
-        System.out.println("orte " + 6);
-        for (int i = 0; i < 6; i++)
-        {
-            distance = 0;
-            System.out.println(i);
-            for (int j = 0; j < matrix.getMatrixSize(); j++)
-            {
-                System.out.print(route[i][j]);
-                System.out.println("," + route[i][j+1]);
-                distance += matrix.getDistance(orte.get(route[i][j]).getIndex() , orte.get((route[i][j+1])).getIndex());
+        for (int i = 0; i < 6; i++) {       //(orteAnzahl-1)!     //Für alle routen
+            distance=0;
+            for(int j=0; j < orteAnzahl-1; j++){        //Für alle Orte
+                distance += matrix.getDistance( orte.get(arrayList.get(j)).getIndex(), orte.get(arrayList.get(j+1)).getIndex()  );
+                //System.out.println( matrix.getDistance( orte.get(arrayList.get(j)).getIndex(), orte.get(arrayList.get(j+1)).getIndex()  ) + " " + j);
             }
-            System.out.println("distance:" + distance);
-            if(distance < shortestDistance)
-                shortestDistance = distance;
-        }
-        System.out.println("shortest distance " + shortestDistance);
+            distance += matrix.getDistance( orte.get(arrayList.get(orteAnzahl-1)).getIndex(), orte.get(arrayList.get(0)).getIndex());
 
-        int[] array = new int[4];
-        array[0] = 0;
-        array[1] = 1;
-        array[2] = 2;
-        array[3] = 3;
+
+            shortestDistance = Math.min(distance, shortestDistance);
+            System.out.println(arrayList);
+            System.out.println("Ausgerechnete distance="+distance + " KrüzesteDistance="+shortestDistance );
+
+            findNextPermutation(arrayList);
+        }
     }
 
 
 
+
+
+
+
+    public static boolean findNextPermutation(ArrayList<Integer> data) {
+// If the given dataset is empty
+// or contains only one element
+// next_permutation is not possible
+        if (data.size() <= 1) return false;
+        int last = data.size() - 2;
+
+// find the longest non-increasing
+// suffix and find the pivot
+        while (last >= 0) {
+            if (data.get(last) < data.get(last + 1)) {
+                break;
+            }
+            last--;
+        }
+
+// If there is no increasing pair
+// there is no higher order permutation
+        if (last < 0) return false;
+
+        int nextGreater = data.size() - 1;
+
+// Find the rightmost successor
+// to the pivot
+        for (int i = data.size() - 1; i > last; i--) {
+            if (data.get(i) > data.get(last))
+            {
+                nextGreater = i;
+                break;
+            }
+        }
+
+// Swap the successor and
+// the pivot
+        data = swap(data, nextGreater, last);
+
+// Reverse the suffix
+        data = reverse(data, last + 1, data.size() - 1);
+
+// Return true as the
+// next_permutation is done
+        return true;
+    }
+
+    public static ArrayList<Integer> swap(ArrayList<Integer> data, int left, int right) {
+// Swap the data
+        int temp = data.get(left);
+        data.set(left, data.get(right));
+        data.set(right, temp);
+
+// Return the updated array
+        return data;
+    }
+
+    // Function to reverse the sub-array
+// starting from left to the right
+// both inclusive
+    public static ArrayList<Integer> reverse(ArrayList<Integer> data, int left, int right) {
+// Reverse the sub-array
+        while (left < right) {
+            int temp = data.get(left);
+            data.set(left++,
+                    data.get(right));
+            data.set(right--, temp);
+        }
+
+// Return the updated array
+        return data;
+    }
+
+
+
+
+
+
+
+    /*
     //https://www.quora.com/How-would-you-explain-an-algorithm-that-generates-permutations-using-lexicographic-ordering + https://www.youtube.com/watch?v=goUlyp4rwiU&t=4s&ab_channel=TheCodingTrain
     public static void lexicographic(int[] array){
         int largestI = -1;
@@ -126,4 +183,6 @@ public class ExakterAlgo {
         System.out.println();
         //return array;
     }
+
+     */
 }
