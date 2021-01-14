@@ -4,10 +4,14 @@ package travelingsalesman.exakterAlgo;
 public class Ort {
     private int index;
 
-    /*public Ort(int index) {
-        this.index = index;
-    }*/
+
     public Ort(){}
+
+    public Ort(int index) {
+        this.index = index;
+    }
+
+
 
 
     public int getIndex() {

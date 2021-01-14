@@ -1,8 +1,6 @@
 package travelingsalesman.exakterAlgo;
 
 
-import java.lang.reflect.Array;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,177 +10,109 @@ public class ExakterAlgo {
     public static void main(String[] args) {
         Matrix matrix = new Matrix();
         //matrix.readMatrixFromFile("C:\\Users\\Megaport\\IdeaProjects\\TravelingSalesman\\travelingsalesman\\exakterAlgo\\MatrixFile.csv");
-        matrix.readMatrixFromFile("E:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\exakterAlgo\\MatrixFile.csv");
-        matrix.printMatrix();
+        matrix.readMatrixFromFile("E:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\exakterAlgo\\MatrixFile.csv"); //read the matrix
+        //matrix.printMatrix();
 
-        int orteAnzahl = 4;
+        int orteAnzahl = (int) matrix.getMatrixSize();
         double distance=0;
         double shortestDistance=Integer.MAX_VALUE;
 
-        //Array mit Allen Orten erstellen:
+        //array with Orte
         ArrayList<Ort> orte = new ArrayList<Ort>((int) matrix.getMatrixSize());
-        for (int i = 0; i < matrix.getMatrixSize(); i++) {
-            orte.add(new Ort());
-        }
 
         for (int i = 0; i < matrix.getMatrixSize(); i++) {
-            orte.get(i).setIndex(i);
+            orte.add(new Ort(i));
         }
 
-        ArrayList<Integer> arrayList = new ArrayList<Integer>( Arrays.asList(0,1,2,3));
 
+        //routen liste restellen
+        ArrayList<Integer> route = new ArrayList<Integer>( orteAnzahl );
+        for (int i = 0; i < orteAnzahl; i++) {
+            route.add(i);
+        }
 
-        for (int i = 0; i < 6; i++) {       //(orteAnzahl-1)!     //Für alle routen
+        for (int i = 0; i < factorial(orteAnzahl-1); i++) {       //(orteAnzahl-1)!     //For all possible routes
             distance=0;
-            for(int j=0; j < orteAnzahl-1; j++){        //Für alle Orte
-                distance += matrix.getDistance( orte.get(arrayList.get(j)).getIndex(), orte.get(arrayList.get(j+1)).getIndex()  );
-                //System.out.println( matrix.getDistance( orte.get(arrayList.get(j)).getIndex(), orte.get(arrayList.get(j+1)).getIndex()  ) + " " + j);
+            for(int j=0; j < orteAnzahl-1; j++){        //for all orte
+                distance += matrix.getDistance( orte.get(route.get(j)).getIndex(), orte.get(route.get(j+1)).getIndex()  );  //calc distance
             }
-            distance += matrix.getDistance( orte.get(arrayList.get(orteAnzahl-1)).getIndex(), orte.get(arrayList.get(0)).getIndex());
-
+            distance += matrix.getDistance( orte.get(route.get(orteAnzahl-1)).getIndex(), orte.get(route.get(0)).getIndex());   //distance from last to beginning
 
             shortestDistance = Math.min(distance, shortestDistance);
-            System.out.println(arrayList);
-            System.out.println("Ausgerechnete distance="+distance + " KrüzesteDistance="+shortestDistance );
+            //System.out.println(route);
+            //System.out.println("Ausgerechnete distance="+distance + " KrüzesteDistance="+shortestDistance );
 
-            findNextPermutation(arrayList);
+            NextLexicographicOrder(route);      //get nextlexiographicOrder
         }
+
+        System.out.println("\nKürzeste Distanz: " + shortestDistance);
     }
 
+    //calcolates the factorial of a given number
+    public static int factorial(int number) {
+        int result = 1;
 
+        for (int factor = 2; factor <= number; factor++) {
+            result *= factor;
+        }
 
+        return result;
+    }
 
+    //Die Funktion gibt die nächste Logische reiheinfolge von einem array hinaus. Besser am Beispiel erklärt:
+    //0 1 2 3 -> 0 1 3 2 -> 0 2 1 3 -> 0 2 3 1...
+    //https://www.quora.com/How-would-you-explain-an-algorithm-that-generates-permutations-using-lexicographic-ordering + https://www.youtube.com/watch?v=goUlyp4rwiU&t=4s&ab_channel=TheCodingTrain
+    public static void NextLexicographicOrder(ArrayList<Integer> array){
+        if (array.size() <= 1) return;
+        int last = array.size() - 2;
 
-
-
-    public static boolean findNextPermutation(ArrayList<Integer> data) {
-// If the given dataset is empty
-// or contains only one element
-// next_permutation is not possible
-        if (data.size() <= 1) return false;
-        int last = data.size() - 2;
-
-// find the longest non-increasing
-// suffix and find the pivot
+        //Find the largest x such that P[x]<P[x+1].
         while (last >= 0) {
-            if (data.get(last) < data.get(last + 1)) {
+            if (array.get(last) < array.get(last + 1)) {
                 break;
             }
             last--;
         }
 
-// If there is no increasing pair
-// there is no higher order permutation
-        if (last < 0) return false;
+        if (last < 0) return;
 
-        int nextGreater = data.size() - 1;
+        int nextGreater = array.size() - 1;
 
-// Find the rightmost successor
-// to the pivot
-        for (int i = data.size() - 1; i > last; i--) {
-            if (data.get(i) > data.get(last))
-            {
+        // Find the largest y such that P[x]<P[y].
+        for (int i = array.size() - 1; i > last; i--) {
+            if (array.get(i) > array.get(last)) {
                 nextGreater = i;
                 break;
             }
         }
 
-// Swap the successor and
-// the pivot
-        data = swap(data, nextGreater, last);
+        //Swap P[x] and P[y].
+        array = swap(array, nextGreater, last);
 
-// Reverse the suffix
-        data = reverse(data, last + 1, data.size() - 1);
+        //Reverse P[x+1 .. n].
+        array = reverse(array, last + 1, array.size() - 1);
 
-// Return true as the
-// next_permutation is done
-        return true;
+        //Ende
+        return;
     }
 
-    public static ArrayList<Integer> swap(ArrayList<Integer> data, int left, int right) {
-// Swap the data
-        int temp = data.get(left);
-        data.set(left, data.get(right));
-        data.set(right, temp);
+    //Function, that swaps a 2 indexes of a given array
+    public static ArrayList<Integer> swap(ArrayList<Integer> array, int nextGreater, int last) {
+        int temp = array.get(nextGreater);
+        array.set(nextGreater, array.get(last) );
+        array.set(last, temp);
 
-// Return the updated array
-        return data;
+        return array;
     }
 
-    // Function to reverse the sub-array
-// starting from left to the right
-// both inclusive
-    public static ArrayList<Integer> reverse(ArrayList<Integer> data, int left, int right) {
-// Reverse the sub-array
-        while (left < right) {
-            int temp = data.get(left);
-            data.set(left++,
-                    data.get(right));
-            data.set(right--, temp);
+    //Function that reverses a part of a given array
+    public static ArrayList<Integer> reverse(ArrayList<Integer> array, int nextGreater, int last) {
+        while (nextGreater < last) {
+            int temp = array.get(nextGreater);
+            array.set(nextGreater++, array.get(last));
+            array.set(last--, temp);
         }
 
-// Return the updated array
-        return data;
+        return array;
     }
-
-
-
-
-
-
-
-    /*
-    //https://www.quora.com/How-would-you-explain-an-algorithm-that-generates-permutations-using-lexicographic-ordering + https://www.youtube.com/watch?v=goUlyp4rwiU&t=4s&ab_channel=TheCodingTrain
-    public static void lexicographic(int[] array){
-        int largestI = -1;
-
-        //Step 1
-        for (int i = 0; i < array.length - 1; i++) {
-            if (array[i] < array[i+1]){
-                largestI = i;
-            }
-        }
-        if (largestI == -1){
-            //System.out.println("Stopp largestI = -1");
-            for (int i : array) {
-                System.out.print(i);
-            }
-            System.out.println();
-            return;
-        }
-
-        //STEP 2:
-        int largestJ = -1;
-
-        for (int i = 0; i < array.length - 1; i++) {
-            if (array[i] < array[largestI]){
-                largestJ = i;
-            }
-        }
-
-        //STEP 3:
-        int temp = array[largestI];
-        array[largestI] = array[largestJ];
-        array[largestJ] = temp;
-
-        //STEP 4:
-        int[] splitarray = new int[4];
-
-        int count=0;
-        for (int i = array.length-1; i > largestI+1; i--) {
-            splitarray[count++] = array[i];
-        }
-        count=0;
-        for (int i =  largestI+1; i < array.length; i++) {
-            array[i] = splitarray[count++];
-        }
-
-        for (int i : array) {
-            System.out.print(i);
-        }
-        System.out.println();
-        //return array;
-    }
-
-     */
 }
