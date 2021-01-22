@@ -1,7 +1,20 @@
 package travelingsalesman.zweiOpt;
 
+
 public class Ort {
-    public static void main(String[] args) {
-        System.out.println("Ort Klasse");
+    private int index;
+
+    public Ort(){}
+
+    public Ort(int index) {
+        this.index = index;
+    }
+
+
+    public int getIndex() {
+        return index;
+    }
+    public void setIndex(int index) {
+        this.index = index;
     }
 }
