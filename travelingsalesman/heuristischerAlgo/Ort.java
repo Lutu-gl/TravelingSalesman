@@ -1,4 +1,4 @@
-package travelingsalesman.zweiOpt;
+package travelingsalesman.heuristischerAlgo;
 
 
 public class Ort {

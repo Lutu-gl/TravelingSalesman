@@ -1,4 +1,4 @@
-package travelingsalesman.zweiOpt;
+package travelingsalesman.heuristischerAlgo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
