@@ -15,7 +15,7 @@ public class ExakterAlgo {
 
         int orteAnzahl = (int) matrix.getMatrixSize();
         double distance=0;
-        double shortestDistance=Integer.MAX_VALUE;
+        double shortestDistance=Double.MAX_VALUE;
 
         //array with Orte
         ArrayList<Ort> orte = new ArrayList<Ort>((int) matrix.getMatrixSize());

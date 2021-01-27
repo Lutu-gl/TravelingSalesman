@@ -1,9 +1,8 @@
 package travelingsalesman.heuristischerAlgo;
 
 
-import travelingsalesman.exakterAlgo.Ort;
-
 import java.util.Random;
+import java.util.SplittableRandom;
 
 public class ZweiOpt {
 
@@ -12,7 +11,7 @@ public class ZweiOpt {
 
         int orteAnzahl = (int) matrix.getMatrixSize();
         double distance=0;
-        double shortestDistance=Integer.MAX_VALUE;
+        double shortestDistance=Double.MAX_VALUE;
 
         //array mit den ganzen Orten (da wird die route gespeichert)
         Ort[] route = new Ort[orteAnzahl];
@@ -20,7 +19,8 @@ public class ZweiOpt {
         for (int i = 0; i < route.length; i++) {
             route[i] = new Ort(i);
         }
-        //int i=0;
+        int i=0;
+        SplittableRandom random = new SplittableRandom();
 
         while(System.currentTimeMillis() - start < maxZeitMilli) {  //end Zeit
             //Distanz ausrechnen
@@ -32,16 +32,17 @@ public class ZweiOpt {
             shortestDistance = Math.min(distance, shortestDistance);
 
             //2 Orte tauschen   (Kleines Problem daran ist, dass Math.random und auch random.nextInt nicht hinterherkommt mit der geschwindikeit des Programms und öffters die selbe random zahl gibt.)
-            swap(route, (int) (Math.random() * orteAnzahl), (int) (Math.random()*orteAnzahl));
-            //Random random = new Random();
-            //swap(route, random.nextInt(orteAnzahl), random.nextInt(orteAnzahl));
+            //swap(route, (int) (Math.random() * orteAnzahl), (int) (Math.random()*orteAnzahl));
+            //swap(route, (int) (Math.random() * orteAnzahl), random.nextInt(orteAnzahl));
 
-            //System.out.println(i +" = " + route[0].getIndex()+ " " + route[1].getIndex() + " " +route[2].getIndex() + " " +route[3].getIndex() +" " + route[4].getIndex());
+            swap(route, random.nextInt(orteAnzahl), random.nextInt(orteAnzahl));
+
+            System.out.println(i +" = " + route[0].getIndex()+ " " + route[1].getIndex() + " " +route[2].getIndex() + " " +route[3].getIndex() +" " + route[4].getIndex());
             //System.out.println("Vergangene Zeit: " + (System.currentTimeMillis() - start));
             distance=0;
-            //i++;
+            i++;
         }
-        //System.out.println("switches="+i);
+        System.out.println("switches="+i);
         return shortestDistance;
     }
 
