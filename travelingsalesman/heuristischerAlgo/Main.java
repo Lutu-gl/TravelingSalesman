@@ -21,5 +21,8 @@ public class Main {
         double distance = zweiOpt.start(matrix, maxZeitMilli);
         System.out.println("ausgerechnete Distanz: " + distance);
 
+        DreiOpt dreiOpt = new DreiOpt();
+        double distance2 = dreiOpt.start(matrix, maxZeitMilli);
+        System.out.println("ausgerechnete Distanz: " + distance2);
     }
 }
