@@ -10,8 +10,9 @@ public class ExakterAlgo {
     public static void main(String[] args) {
         Matrix matrix = new Matrix();
         //matrix.readMatrixFromFile("C:\\Users\\Megaport\\IdeaProjects\\TravelingSalesman\\travelingsalesman\\exakterAlgo\\MatrixFile5Orte.csv");
-        matrix.readMatrixFromFile("E:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\MatrixFile5Orte.csv"); //read the matrix
-        //matrix.printMatrix();
+        matrix.readMatrixFromFile("F:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\MatrixFile17Orte.csv"); //read the matrix
+        matrix.printMatrix();
+        System.out.println(matrix.getMatrixSize());
 
         int orteAnzahl = (int) matrix.getMatrixSize();
         double distance=0;
@@ -40,7 +41,7 @@ public class ExakterAlgo {
 
             shortestDistance = Math.min(distance, shortestDistance);
             //System.out.println(route);
-            //System.out.println("Ausgerechnete distance="+distance + " KrüzesteDistance="+shortestDistance );
+            System.out.println("Ausgerechnete distance="+distance + " KrüzesteDistance="+shortestDistance );
 
             NextLexicographicOrder(route);      //get nextlexiographicOrder
         }

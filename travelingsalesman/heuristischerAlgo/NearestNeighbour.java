@@ -20,7 +20,7 @@ public class NearestNeighbour
      * @return erg , double mit der Laenge des berechneten Weges.
      *
      */
-    public double tsp(Matrix matrix)
+    public double start(Matrix matrix)
     {
         int numberOfNodes = (int) matrix.getMatrixSize();
         int[] visited = new int[numberOfNodes];//ob schun besucht
@@ -77,6 +77,5 @@ public class NearestNeighbour
             }
         }
         return erg;
-
     }
 }

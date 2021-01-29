@@ -19,7 +19,7 @@ public class ZweiOpt {
         for (int i = 0; i < route.length; i++) {
             route[i] = new Ort(i);
         }
-        int i=0;
+        //int i=0;
         SplittableRandom random = new SplittableRandom();
 
         while(System.currentTimeMillis() - start < maxZeitMilli) {  //end Zeit
@@ -37,12 +37,12 @@ public class ZweiOpt {
 
             swap(route, random.nextInt(orteAnzahl), random.nextInt(orteAnzahl));
 
-            System.out.println(i +" = " + route[0].getIndex()+ " " + route[1].getIndex() + " " +route[2].getIndex() + " " +route[3].getIndex() +" " + route[4].getIndex());
+            //System.out.println(i +" = " + route[0].getIndex()+ " " + route[1].getIndex() + " " +route[2].getIndex() + " " +route[3].getIndex() +" " + route[4].getIndex());
             //System.out.println("Vergangene Zeit: " + (System.currentTimeMillis() - start));
             distance=0;
-            i++;
+            //i++;
         }
-        System.out.println("switches="+i);
+        //System.out.println("switches="+i);
         return shortestDistance;
     }
 

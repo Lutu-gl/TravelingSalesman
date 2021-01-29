@@ -17,8 +17,6 @@ class NearestInsertion {
             route.add(new Ort(i));
         }
             ergOrte = insertNearest(route, ergOrte, matrix);
-
-
     }
 
     //Algorithmus durchfuehren
