@@ -11,7 +11,12 @@ public final class Matrix {
     public Matrix(){
     }
 
-    //Lest matrix von einer angegebene File ein und wandelt es in double matrix array um.
+    /**
+     *
+     * @param name Pfad zu Datei
+     * @return wenn die Datei gefunden wird True sonst False
+     * Einlesen von der Matrix Datei mit einem Scanner welcher aus der Datei liest. bei eine Exception wird False zurückgegeben und der Stacktree ausgegeben in der Konsole
+     */
     public boolean leseMatrixvonDatei(String name){
         String[] zerteilterText;
         String text = "";
@@ -41,7 +46,9 @@ public final class Matrix {
         return true;
     }
 
-    //Printet die matrix
+    /**
+     * Gibt die eingelesene Matrix aus
+     */
     public void printMatrix() {
         for (double[] doubles : matrix) {
             for (double aDouble : doubles) {
@@ -51,11 +58,29 @@ public final class Matrix {
         }
     }
 
-
+    /**
+     *
+     * @param index1 erster index
+     * @param index2 zweiter index
+     * @return distanz zwischen index1 und index2
+     */
     public double getDistance(int index1, int index2){
         return matrix[index1][index2];
     }
 
+    /**
+     *
+     * @return größe der Matrix
+     */
+    public int getMatrixSize(){
+        return matrix.length;
+    }
+
+    /**
+     *
+     * @param route Die route mit den Indexen aus welchen es die Distanz berechnen soll
+     * @return berechnete Distanz(Double)
+     */
     public double getDistance(ArrayList<Ort> route){
         double distance=0;
 
@@ -65,9 +90,5 @@ public final class Matrix {
         distance += getDistance( route.get((int) (getMatrixSize() - 1)).getIndex(), route.get(0).getIndex());
 
         return distance;
-    }
-
-    public double getMatrixSize(){
-        return matrix.length;
     }
 }
