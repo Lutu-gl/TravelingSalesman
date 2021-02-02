@@ -2,6 +2,7 @@ package travelingsalesman.exakterAlgo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class Matrix {
@@ -59,4 +60,6 @@ public final class Matrix {
     public double getMatrixSize(){
         return matrix.length;
     }
+
+
 }

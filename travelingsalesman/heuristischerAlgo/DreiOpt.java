@@ -1,19 +1,21 @@
 package travelingsalesman.heuristischerAlgo;
 
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class DreiOpt {
-    public double start(Matrix matrix, long maxZeitMilli){
+    public double start(Matrix matrix, long maxZeitMilli, ArrayList<Ort> routeUebugergeben){
         long start = System.currentTimeMillis();        //Start zeit
 
         int orteAnzahl = (int) matrix.getMatrixSize();
         double distance=0;
-        double shortestDistance=Integer.MAX_VALUE;
+        double shortestDistance=Double.MAX_VALUE;
 
         //array mit den ganzen Orten (da wird die route gespeichert)
         Ort[] route = new Ort[orteAnzahl];
+        //route = (Ort[]) routeUebugergeben.toArray();
+        route = routeUebugergeben.toArray(new Ort[routeUebugergeben.size()]);
 
         for (int i = 0; i < route.length; i++) {
             route[i] = new Ort(i);
@@ -34,7 +36,7 @@ public class DreiOpt {
                 p2 = (int) (Math.random() * orteAnzahl);
                 p3 = (int) (Math.random() * orteAnzahl);
             }
-            System.out.println("indexes to change: " + p1 + ","+ p2 +","+ p3);
+            //System.out.println("indexes to change: " + p1 + ","+ p2 +","+ p3);
             list3P.set(0,route[p1]);
             list3P.set(1,route[p2]);
             list3P.set(2,route[p3]);
@@ -53,21 +55,21 @@ public class DreiOpt {
                 {
                     route = rCopy.clone();
                     shortestDistance = distance;
-                    System.out.println("array wird jetzt verändert");
+                    //System.out.println("array wird jetzt verändert");
                     for (Ort e : route)
                     {
-                        System.out.print(e.getIndex() + ",");
+                        //System.out.print(e.getIndex() + ",");
                     }
 
                 }
                 else
                     rCopy = route.clone();
-                System.out.println(distance);
+                //System.out.println(distance);
                 distance = 0;
                 swap3P(rCopy, p1, p2 ,p3, list3P);
             }
 
-            System.out.println(shortestDistance);
+            //System.out.println(shortestDistance);
         }
         return shortestDistance;
     }
@@ -78,7 +80,7 @@ public class DreiOpt {
         for (Ort e :
                 list3P)
         {
-            System.out.print(e.getIndex() + ",");
+            //System.out.print(e.getIndex() + ",");
         }
         route[p1] = list3P.get(0);
         route[p2] = list3P.get(1);

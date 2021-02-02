@@ -1,5 +1,6 @@
 package travelingsalesman.heuristischerAlgo;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -20,7 +21,7 @@ public class NearestNeighbour
      * @return erg , double mit der Laenge des berechneten Weges.
      *
      */
-    public double start(Matrix matrix)
+    public ArrayList<Ort> start(Matrix matrix)
     {
         int numberOfNodes = (int) matrix.getMatrixSize();
         int[] visited = new int[numberOfNodes];//ob schun besucht
@@ -68,7 +69,7 @@ public class NearestNeighbour
          * Berechnet mit Hilfe von tour array die Länge
          */
         for(int o = 0; o< numberOfNodes; o++){
-            System.out.print(tour[o]+1+" ");
+            //System.out.print(tour[o]+1+" ");
             if(o== numberOfNodes -1){
                 erg += matrix.getDistance(tour[o], tour[0]);
             }
@@ -76,6 +77,14 @@ public class NearestNeighbour
                 erg += matrix.getDistance(tour[o], tour[o + 1]);
             }
         }
-        return erg;
+        ArrayList<Ort> route = new ArrayList<Ort>((int) matrix.getMatrixSize());
+
+        for (int j = 0; j < tour.length; j++) {
+               route.add(new Ort(tour[j]));
+        }
+
+        return route;
+
     }
 }
+

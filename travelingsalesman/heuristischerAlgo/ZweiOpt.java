@@ -1,23 +1,27 @@
 package travelingsalesman.heuristischerAlgo;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.SplittableRandom;
 
 public class ZweiOpt {
 
-    public double start(Matrix matrix, long maxZeitMilli){
+    public double start(Matrix matrix, long maxZeitMilli, ArrayList<Ort> route){
         long start = System.currentTimeMillis();        //Start zeit
 
         int orteAnzahl = (int) matrix.getMatrixSize();
         double distance=0;
         double shortestDistance=Double.MAX_VALUE;
+        //route = null;
 
         //array mit den ganzen Orten (da wird die route gespeichert)
-        Ort[] route = new Ort[orteAnzahl];
+        // route = new ArrayList<Ort>(orteAnzahl);
 
-        for (int i = 0; i < route.length; i++) {
-            route[i] = new Ort(i);
+        for (int i = 0; i < route.size(); i++) {
+            //route.set(i, new Ort(i));
+
+
         }
         //int i=0;
         SplittableRandom random = new SplittableRandom();
@@ -25,9 +29,9 @@ public class ZweiOpt {
         while(System.currentTimeMillis() - start < maxZeitMilli) {  //end Zeit
             //Distanz ausrechnen
             for(int j=0; j < orteAnzahl-1; j++){
-                distance += matrix.getDistance( route[j].getIndex(), route[j+1].getIndex()  );
+                distance += matrix.getDistance( route.get(j).getIndex(), route.get(j + 1).getIndex()  );
             }
-            distance += matrix.getDistance( route[orteAnzahl-1].getIndex(), route[0].getIndex());
+            distance += matrix.getDistance( route.get(orteAnzahl - 1).getIndex(), route.get(0).getIndex());
 
             shortestDistance = Math.min(distance, shortestDistance);
 
@@ -46,10 +50,10 @@ public class ZweiOpt {
         return shortestDistance;
     }
 
-    private void swap(Ort[] route, int i1, int i2){
-        Ort temp = route[i1];
-        route[i1] = route[i2];
-        route[i2] = temp;
+    private void swap(ArrayList<Ort> route, int i1, int i2){
+        Ort temp = route.get(i1);
+        route.set(i1, route.get(i2));
+        route.set(i2, temp);
     }
 
 

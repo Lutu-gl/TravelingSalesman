@@ -32,7 +32,9 @@ public class ExakterAlgo {
             route.add(i);
         }
 
-        for (int i = 0; i < factorial(orteAnzahl-1); i++) {       //(orteAnzahl-1)!     //For all possible routes
+        System.out.println(orteAnzahl + " " + factorial(orteAnzahl-1));
+
+        for (long i = 0; i < factorial(orteAnzahl-1); i++) {       //(orteAnzahl-1)!     //For all possible routes
             distance=0;
             for(int j=0; j < orteAnzahl-1; j++){        //for all orte
                 distance += matrix.getDistance( orte.get(route.get(j)).getIndex(), orte.get(route.get(j+1)).getIndex()  );  //calc distance
@@ -41,7 +43,7 @@ public class ExakterAlgo {
 
             shortestDistance = Math.min(distance, shortestDistance);
             //System.out.println(route);
-            System.out.println("Ausgerechnete distance="+distance + " KrüzesteDistance="+shortestDistance );
+            //System.out.println("Ausgerechnete distance="+distance + " KrüzesteDistance="+shortestDistance );
 
             NextLexicographicOrder(route);      //get nextlexiographicOrder
         }
@@ -50,10 +52,10 @@ public class ExakterAlgo {
     }
 
     //calcolates the factorial of a given number
-    public static int factorial(int number) {
-        int result = 1;
+    public static long factorial(int number) {
+        long result = 1;
 
-        for (int factor = 2; factor <= number; factor++) {
+        for (long factor = 2; factor <= number; factor++) {
             result *= factor;
         }
 

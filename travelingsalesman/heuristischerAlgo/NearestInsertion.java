@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 class NearestInsertion {
 
-    public ArrayList<Ort> NearestInsertion(Matrix matrix){
+    public ArrayList<Ort> start(Matrix matrix){
 
         double distance = 0;
         double shortestDistance = Integer.MAX_VALUE;

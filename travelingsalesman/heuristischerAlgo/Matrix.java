@@ -2,6 +2,7 @@ package travelingsalesman.heuristischerAlgo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class Matrix {
@@ -53,6 +54,17 @@ public final class Matrix {
 
     public double getDistance(int index1, int index2){
         return matrix[index1][index2];
+    }
+
+    public double getDistance(ArrayList<Ort> route){
+        double distance=0;
+
+        for(int j=0; j < getMatrixSize()-1; j++){
+            distance += getDistance( route.get(j).getIndex(), route.get(j + 1).getIndex()  );
+        }
+        distance += getDistance( route.get((int) (getMatrixSize() - 1)).getIndex(), route.get(0).getIndex());
+
+        return distance;
     }
 
     public double getMatrixSize(){
