@@ -87,7 +87,7 @@ public class DreiOpt {
     }
 
     //Funktioniert in der Theorie :)
-    public static void naechstesLexicographicOrder(ArrayList<Ort> array){
+    private static void naechstesLexicographicOrder(ArrayList<Ort> array){
         if (array.size() <= 1) return;
         int last = array.size() - 2;
 
@@ -122,7 +122,7 @@ public class DreiOpt {
     }
 
     //Function, that swaps a 2 indexes of a given array
-    public static ArrayList<Ort> swap(ArrayList<Ort> array, int nextGreater, int last) {
+    private static ArrayList<Ort> swap(ArrayList<Ort> array, int nextGreater, int last) {
         Ort temp = array.get(nextGreater);
         array.set(nextGreater, array.get(last) );
         array.set(last, temp);
@@ -131,7 +131,7 @@ public class DreiOpt {
     }
 
     //Function that reverses a part of a given array
-    public static ArrayList<Ort> reverse(ArrayList<Ort> array, int nextGreater, int last) {
+    private static ArrayList<Ort> reverse(ArrayList<Ort> array, int nextGreater, int last) {
         while (nextGreater < last) {
             Ort temp = array.get(nextGreater);
             array.set(nextGreater++, array.get(last));

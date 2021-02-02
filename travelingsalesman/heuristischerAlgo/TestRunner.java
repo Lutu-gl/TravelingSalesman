@@ -9,9 +9,9 @@ public class TestRunner {
     public static void main(String[] args) {
         JUnitCore junit = new JUnitCore();
         Result result = junit.run(
-                //DreiOptTests.class,
-                //ZweiOptTests.class,
-                MatrixTests.class);
+                DreiOptTests.class,
+                MatrixTests.class
+                );
         System.out.println(result.getFailureCount());
         for (Failure e : result.getFailures())
         {
