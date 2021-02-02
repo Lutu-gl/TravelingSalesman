@@ -55,7 +55,7 @@ public final class Matrix {
         return matrix[index1][index2];
     }
 
-    public double getMatrixSize(){
+    public int getMatrixSize(){
         return matrix.length;
     }
 }
