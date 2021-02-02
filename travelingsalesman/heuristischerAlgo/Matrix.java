@@ -40,8 +40,8 @@ public final class Matrix {
             }
 
             scanner.close();
-        } catch(FileNotFoundException e){
-            e.printStackTrace();
+        } catch(Exception e){
+            System.err.println("Es gab einen fehler beim Einlesen");
             return false;
         }
 

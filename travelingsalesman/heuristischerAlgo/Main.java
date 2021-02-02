@@ -14,15 +14,16 @@ public class Main {
         System.out.println("---------------------------");
 
 
-        System.out.println("Bitte Bitte den Pfad angeben:");
-        Scanner sc1 = new Scanner(System.in);
-        String pfad = sc1.nextLine();
-
-        //Matrix erstellen und einlesen
         Matrix matrix = new Matrix();
-        //matrix.readMatrixFromFile("C:\\Users\\Megaport\\IdeaProjects\\TravelingSalesman\\travelingsalesman\\exakterAlgo\\MatrixFile5Orte.csv");
-        //matrix.leseMatrixvonDatei("F:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\MatrixFile17Orte.csv"); //read the matrix
-        matrix.leseMatrixvonDatei(pfad); //read the matrix
+        Scanner sc1 = new Scanner(System.in);
+
+
+        System.out.println("Bitte Bitte den Pfad angeben:");
+        String pfad = sc1.nextLine();
+        if (!matrix.leseMatrixvonDatei(pfad)){
+            System.exit(0);
+        }
+
 
         ArrayList<Ort> route = new ArrayList<Ort>((int) matrix.getMatrixSize());
         for (int i = 0; i < matrix.getMatrixSize(); i++) {
@@ -37,35 +38,43 @@ public class Main {
         NearestNeighbour nearestNeighbour = new NearestNeighbour();
         NearestInsertion nearestInsertion = new NearestInsertion();
 
-
-        System.out.println("Was Möchten sie für einene Algorithmus verwenden");
-        System.out.println("Nur DreiOpt (1)");
-        System.out.println("Nur ZweiOpt (2)");
-        System.out.println("Nur DreiOpt mit NearestNeighbour (3)");
-        System.out.println("Nur ZweiOpt mit NearestNeighbour (4)");
-
-        Scanner sc = new Scanner(System.in);
-        int input = sc.nextInt();
+        System.out.println("Wollen Sie die Matrix mit einem Pfad eingeben oder über die Konsole (1/2): ");
+        int input = sc1.nextInt();
 
         if (input == 1){
-            System.out.println("DreiOpt:");
-            System.out.println("Distanz: " + dreiOpt.start(matrix, 100, route));
+            System.out.println("Was Möchten sie für einene Algorithmus verwenden");
+            System.out.println("Nur DreiOpt (1)");
+            System.out.println("Nur ZweiOpt (2)");
+            System.out.println("DreiOpt mit NearestNeighbour (3)");
+            System.out.println("ZweiOpt mit NearestNeighbour (4)");
+
+            Scanner sc2 = new Scanner(System.in);
+            input = sc2.nextInt();
+
+            if (input == 1){
+                System.out.println("DreiOpt:");
+                System.out.println("Distanz: " + dreiOpt.start(matrix, 100, route));
+            }
+            else if (input == 2){
+                System.out.println("ZweiOpt:");
+                System.out.println("Distanz: " + zweiOpt.start(matrix, 100, route));
+            }
+            else if(input == 3){
+                System.out.println("DreiOpt mit Nearest Neighbour:");
+                System.out.println("Distanz: " + dreiOpt.start(matrix,1000, nearestNeighbour.start(matrix) ));
+            }
+            else if(input == 4){
+                System.out.println("ZweiOpt mit Nearest Neighbour:");
+                System.out.println("Distanz: " + zweiOpt.start(matrix,1000, nearestNeighbour.start(matrix) ));
+            }
+            else {
+                System.out.println("Die eingabe ist falsch");
+            }
         }
         else if (input == 2){
-            System.out.println("ZweiOpt:");
-            System.out.println("Distanz: " + zweiOpt.start(matrix, 100, route));
+
         }
-        else if(input == 3){
-            System.out.println("DreiOpt mit Nearest Neighbour:");
-            System.out.println("Distanz: " + dreiOpt.start(matrix,1000, nearestNeighbour.start(matrix) ));
-        }
-        else if(input == 4){
-            System.out.println("ZweiOpt mit Nearest Neighbour:");
-            System.out.println("Distanz: " + zweiOpt.start(matrix,1000, nearestNeighbour.start(matrix) ));
-        }
-        else {
-            System.out.println("Die eingabe ist falsch");
-        }
+
 
 
         //DreiOpt dreiOpt = new DreiOpt();
