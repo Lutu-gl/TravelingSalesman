@@ -1,11 +1,23 @@
 package travelingsalesman.heuristischerAlgo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * @author Stefan Hasler
+ */
 public class DreiOpt {
-    public double start(Matrix matrix, long maxZeitMilli, ArrayList<Ort> routeUebugergeben){
+    /**
+     *
+     * @param matrix Matrix welche die Distanzen enthält
+     * @param maxZeitMilli Maximale Zeit welche der Alg brauchen darf in millisekunden
+     * @param routeUebergeben Die Route welche der Alg verbesseren soll
+     * @return Distanz welche der Alg berechnet
+     *
+     *3-Opt nimmt 3 punkte und macht jede Kombination dieser Punkte, setzt diese dann in die Route ein und vergleicht sie mit der alten Route
+     * Die schlechter der beiden Routen wird verworfen
+     */
+    public double start(Matrix matrix, long maxZeitMilli, ArrayList<Ort> routeUebergeben){
         long start = System.currentTimeMillis();        //Start zeit
 
         int orteAnzahl = (int) matrix.getMatrixSize();
@@ -14,12 +26,8 @@ public class DreiOpt {
 
         //array mit den ganzen Orten (da wird die route gespeichert)
         Ort[] route = new Ort[orteAnzahl];
-        //route = (Ort[]) routeUebugergeben.toArray();
-        route = routeUebugergeben.toArray(new Ort[routeUebugergeben.size()]);
 
-        for (int i = 0; i < route.length; i++) {
-            route[i] = new Ort(i);
-        }
+        route = routeUebergeben.toArray(new Ort[routeUebergeben.size()]);
 
         ArrayList<Ort> list3P = new ArrayList<Ort>();
         list3P.add(null);
@@ -36,7 +44,6 @@ public class DreiOpt {
                 p2 = (int) (Math.random() * orteAnzahl);
                 p3 = (int) (Math.random() * orteAnzahl);
             }
-            //System.out.println("indexes to change: " + p1 + ","+ p2 +","+ p3);
             list3P.set(0,route[p1]);
             list3P.set(1,route[p2]);
             list3P.set(2,route[p3]);
@@ -55,45 +62,54 @@ public class DreiOpt {
                 {
                     route = rCopy.clone();
                     shortestDistance = distance;
-                    //System.out.println("array wird jetzt verändert");
-                    for (Ort e : route)
-                    {
-                        //System.out.print(e.getIndex() + ",");
-                    }
 
                 }
                 else
                     rCopy = route.clone();
-                //System.out.println(distance);
                 distance = 0;
                 swap3P(rCopy, p1, p2 ,p3, list3P);
             }
-
-            //System.out.println(shortestDistance);
         }
         return shortestDistance;
     }
-
+    /**
+     *
+     * @param route Die momenaten Route
+     * @param p1 Erster Index
+     * @param p2 Zweiter Index
+     * @param p3 Dritter Index
+     * @param list3P die Orte in einer Arraylist
+     * Macht die nächste logische Lexographische Folge der 3 Punkte
+     *
+     *       
+     */
     private void swap3P(Ort[] route, int p1, int p2, int p3, ArrayList<Ort> list3P){
         naechstesLexicographicOrder(list3P);
 
-        for (Ort e :
-                list3P)
-        {
-            //System.out.print(e.getIndex() + ",");
-        }
         route[p1] = list3P.get(0);
         route[p2] = list3P.get(1);
         route[p3] = list3P.get(2);
 
     }
 
-    //Funktioniert in der Theorie :)
+    /**
+     *
+     * @param array Array welches verändert werden soll
+     *              Es mach die Lexographische Reihnfolge
+     *              des Übergebenen Arrays d.H.:
+     *              123 -> 132
+     *              132 -> 213
+     *              213 -> 231
+     *              231 -> 312
+     *              312 -> 321
+     *              Aber mit Orten
+     */
     public static void naechstesLexicographicOrder(ArrayList<Ort> array){
+        //https://www.quora.com/What-is-lexicographic-order?share=1 von der Seite
         if (array.size() <= 1) return;
         int last = array.size() - 2;
 
-        //Find the largest x such that P[x]<P[x+1].
+        //Finde das größte x damit P[x]<P[x+1].
         while (last >= 0) {
             if (array.get(last).getIndex() < array.get(last + 1).getIndex()) {
                 break;
@@ -105,7 +121,7 @@ public class DreiOpt {
 
         int nextGreater = array.size() - 1;
 
-        // Find the largest y such that P[x]<P[y].
+        // Finde das größte y damit P[x]<P[y].
         for (int i = array.size() - 1; i > last; i--) {
             if (array.get(i).getIndex() > array.get(last).getIndex()) {
                 nextGreater = i;
@@ -113,7 +129,7 @@ public class DreiOpt {
             }
         }
 
-        //Swap P[x] and P[y].
+        //Tausche P[x] und P[y].
         array = swap(array, nextGreater, last);
 
         //Reverse P[x+1 .. n].
@@ -123,7 +139,16 @@ public class DreiOpt {
         return;
     }
 
-    //Function, that swaps a 2 indexes of a given array
+    //Function, was 2 indexe von array tauscht
+    /**
+     *
+     * @param array arraylist mit Orten
+     * @param nextGreater index1
+     * @param last  index2
+     * @return geswapped Arraylist
+     *
+     * Dreht 2 indexe um mit einen Simplen Dreieckstausch
+     */
     public static ArrayList<Ort> swap(ArrayList<Ort> array, int nextGreater, int last) {
         Ort temp = array.get(nextGreater);
         array.set(nextGreater, array.get(last) );
@@ -132,7 +157,15 @@ public class DreiOpt {
         return array;
     }
 
-    //Function that reverses a part of a given array
+    //Funktion das einen bestimmten Teil vom Array reversed
+    /**
+     *
+     * @param array arraylist mit Orten
+     * @param nextGreater die Nächst höhere zahl
+     * @param last  Die letze zahl
+     * @return reverste Arraylist
+     * Dreht die übergeben Arraylist simpel um
+     */
     public static ArrayList<Ort> reverse(ArrayList<Ort> array, int nextGreater, int last) {
         while (nextGreater < last) {
             Ort temp = array.get(nextGreater);
