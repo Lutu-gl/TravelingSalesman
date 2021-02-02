@@ -2,6 +2,7 @@ package travelingsalesman.heuristischerAlgo;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class DreiOpt {
     public double start(Matrix matrix, long maxZeitMilli){
@@ -12,45 +13,81 @@ public class DreiOpt {
         double shortestDistance=Integer.MAX_VALUE;
 
         //array mit den ganzen Orten (da wird die route gespeichert)
-
         Ort[] route = new Ort[orteAnzahl];
 
         for (int i = 0; i < route.length; i++) {
             route[i] = new Ort(i);
         }
-        //int i=0;
 
+        ArrayList<Ort> list3P = new ArrayList<Ort>();
+        list3P.add(null);
+        list3P.add(null);
+        list3P.add(null);
         while(System.currentTimeMillis() - start < maxZeitMilli) {  //end Zeit
-            //Distanz ausrechnen
-            for(int j=0; j < orteAnzahl-1; j++){
-                distance += matrix.getDistance( route[j].getIndex(), route[j+1].getIndex()  );
+
+            Ort[] rCopy = route.clone();
+
+            int p1=0,p2=0,p3=0;
+            while(p1 == p2 || p2 == p3 || p3 == p1)
+            {
+                p1 = (int) (Math.random() * orteAnzahl);
+                p2 = (int) (Math.random() * orteAnzahl);
+                p3 = (int) (Math.random() * orteAnzahl);
             }
-            distance += matrix.getDistance( route[orteAnzahl-1].getIndex(), route[0].getIndex());
+            System.out.println("indexes to change: " + p1 + ","+ p2 +","+ p3);
+            list3P.set(0,route[p1]);
+            list3P.set(1,route[p2]);
+            list3P.set(2,route[p3]);
 
-            shortestDistance = Math.min(distance, shortestDistance);
+            //Intellij felxt
+            list3P.sort(Comparator.comparingInt(Ort::getIndex));
 
-            //2 Orte tauschen   (Kleines Problem daran ist, dass Math.random und auch random.nextInt nicht hinterherkommt mit der geschwindikeit des Programms und öffters die selbe random zahl gibt.)
-            swap(route, (int) (Math.random() * orteAnzahl), (int) (Math.random()*orteAnzahl));
-            //Random random = new Random();
-            //swap(route, random.nextInt(orteAnzahl), random.nextInt(orteAnzahl));
 
-            //System.out.println(i +" = " + route[0].getIndex()+ " " + route[1].getIndex() + " " +route[2].getIndex() + " " +route[3].getIndex() +" " + route[4].getIndex());
-            //System.out.println("Vergangene Zeit: " + (System.currentTimeMillis() - start));
-            distance=0;
-            //i++;
+            for(int h = 0; h != 6; h++)
+            {
+                for(int j=0; j < orteAnzahl-1; j++){
+                    distance += matrix.getDistance( rCopy[j].getIndex(), rCopy[j+1].getIndex()  );
+                }
+                distance += matrix.getDistance( rCopy[orteAnzahl-1].getIndex(), rCopy[0].getIndex());
+                if(distance < shortestDistance)
+                {
+                    route = rCopy.clone();
+                    shortestDistance = distance;
+                    System.out.println("array wird jetzt verändert");
+                    for (Ort e : route)
+                    {
+                        System.out.print(e.getIndex() + ",");
+                    }
+
+                }
+                else
+                    rCopy = route.clone();
+                System.out.println(distance);
+                distance = 0;
+                swap3P(rCopy, p1, p2 ,p3, list3P);
+            }
+
+            System.out.println(shortestDistance);
         }
-        //System.out.println("switches="+i);
         return shortestDistance;
     }
 
-    private void swap(Ort[] route, int i1, int i2){
-        Ort temp = route[i1];
-        route[i1] = route[i2];
-        route[i2] = temp;
+    private void swap3P(Ort[] route, int p1, int p2, int p3, ArrayList<Ort> list3P){
+        naechstesLexicographicOrder(list3P);
+
+        for (Ort e :
+                list3P)
+        {
+            System.out.print(e.getIndex() + ",");
+        }
+        route[p1] = list3P.get(0);
+        route[p2] = list3P.get(1);
+        route[p3] = list3P.get(2);
+
     }
 
     //Funktioniert in der Theorie :)
-    public static void NaechstesLexicographicOrder(ArrayList<Ort> array){
+    public static void naechstesLexicographicOrder(ArrayList<Ort> array){
         if (array.size() <= 1) return;
         int last = array.size() - 2;
 
