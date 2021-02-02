@@ -5,19 +5,18 @@ import java.util.ArrayList;
 /**
  * @author Lukas
  * In dieser Klasse ist der Nearest Insertion Algorithmus Programmiert.
- * Um ihn auf zu Rufen wird eine Konstruktor verwendet.
  */
 class NearestInsertion {
 
     /**
      * @param matrix
      * @return ArrayList von Ort. Dieser Gibt die Route an die der NearestInsert aus gerechnet hat.
-     * Der Konstrukter erstellte die ArrayList für die Rückgabe und die ArrayList die mit den unsortierten Punkten gefült ist.
+     * Die Methode erstellt die ArrayList für die Rückgabe und die ArrayList die mit den unsortierten Punkten gefült ist.
      */
     public ArrayList<Ort> start(Matrix matrix){
 
         double distance = 0;
-        double shortestDistance = Integer.MAX_VALUE;
+        double shortestDistance = Double.MAX_VALUE;
         int orteAnzahl = (int) matrix.getMatrixSize();
 
         //array in dem die Orte der Matrix gespeichert sind
