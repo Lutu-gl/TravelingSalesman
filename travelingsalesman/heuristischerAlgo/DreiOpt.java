@@ -4,7 +4,13 @@ package travelingsalesman.heuristischerAlgo;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+
 public class DreiOpt {
+    /**
+     * @param matrix Die Matrix welche die Distanzen enthält
+     * @param maxZeitMilli Die Zeit wie langer die Funktion läuft
+     * @Author Luca Turin, Stefan Hasler
+     */
     public double start(Matrix matrix, long maxZeitMilli){
         long start = System.currentTimeMillis();        //Start zeit
 
@@ -72,6 +78,14 @@ public class DreiOpt {
         return shortestDistance;
     }
 
+    /**
+     *
+     * @param route Die momenaten Route
+     * @param p1 Erster Index
+     * @param p2 Zweiter Index
+     * @param p3 Dritter Index
+     * @param list3P die Orte in einer Arraylist
+     */
     private void swap3P(Ort[] route, int p1, int p2, int p3, ArrayList<Ort> list3P){
         naechstesLexicographicOrder(list3P);
 
@@ -86,7 +100,18 @@ public class DreiOpt {
 
     }
 
-    //Funktioniert in der Theorie :)
+    /**
+     *
+     * @param array Array welches verändert werden soll
+     *              Es mach die Lexographische Reihnfolge
+     *              des Übergebenen Arrays d.H.:
+     *              123 -> 132
+     *              132 -> 213
+     *              213 -> 231
+     *              231 -> 312
+     *              312 -> 321
+     *              Aber mit Orten
+     */
     private static void naechstesLexicographicOrder(ArrayList<Ort> array){
         if (array.size() <= 1) return;
         int last = array.size() - 2;
@@ -121,7 +146,13 @@ public class DreiOpt {
         return;
     }
 
-    //Function, that swaps a 2 indexes of a given array
+    /**
+     *
+     * @param array arraylist mit Orten
+     * @param nextGreater die Nächst höhere zahl
+     * @param last  Die letze zahl
+     * @return geswapped Arraylist
+     */
     private static ArrayList<Ort> swap(ArrayList<Ort> array, int nextGreater, int last) {
         Ort temp = array.get(nextGreater);
         array.set(nextGreater, array.get(last) );
@@ -130,7 +161,13 @@ public class DreiOpt {
         return array;
     }
 
-    //Function that reverses a part of a given array
+    /**
+     *
+     * @param array arraylist mit Orten
+     * @param nextGreater die Nächst höhere zahl
+     * @param last  Die letze zahl
+     * @return reverste Arraylist
+     */
     private static ArrayList<Ort> reverse(ArrayList<Ort> array, int nextGreater, int last) {
         while (nextGreater < last) {
             Ort temp = array.get(nextGreater);
