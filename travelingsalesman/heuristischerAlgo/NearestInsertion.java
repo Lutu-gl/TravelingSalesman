@@ -1,13 +1,20 @@
 package travelingsalesman.heuristischerAlgo;
 import java.util.ArrayList;
 
+/**
+ * @author Lukas
+ * In dieser Klasse ist der Nearest Insertion Algorithmus Programmiert.
+ * Um ihn auf zu Rufen wird eine Konstruktor verwendet.
+ */
 class NearestInsertion {
 
+    /**
+     *
+     * @param matrix
+     * @return ArrayList von Ort. Dieser Gibt die Route an die der NearestInsert aus gerechnet hat.
+     * Der Konstrukter erstellte die ArrayList für die Rückgabe und die ArrayList die mit den unsortierten Punkten gefült ist.
+     */
     public ArrayList<Ort> NearestInsertion(Matrix matrix){
-
-        double distance = 0;
-        double shortestDistance = Integer.MAX_VALUE;
-        int orteAnzahl = (int) matrix.getMatrixSize();
 
         //array in dem die Orte der Matrix gespeichert sind
         ArrayList<Ort> route = new ArrayList<Ort>((int) matrix.getMatrixSize());
@@ -26,6 +33,14 @@ class NearestInsertion {
         return erg;*/
     }
 
+    /**
+     *
+     * @param route ist die Arraylist mit den gegebenen Punkten.
+     * @param erg ist die Arraylist in die, die sortierten Punkte hinein kommen.
+     * @param matrix wird uebergeben um auf die funktion getDistance() von Matrix zuzugreifen.
+     * @return ArrayList gibt die sortierten Punkte zurück.
+     * In diesr Methode wird der Nearest Insertion Algorithmus durchgeführt.
+     */
     //Algorithmus durchführen
     private ArrayList<Ort> insertNearest(ArrayList<Ort> route, ArrayList<Ort> erg, Matrix matrix){
         int orteAnzahl = route.size();
@@ -73,6 +88,13 @@ class NearestInsertion {
         return erg;
     }
 
+    /**
+     *
+     * @param orte Arraylist mit allen Punkten.
+     * @param erg  Arraylist mit den bereits vergebenen Punkten.
+     * @param points Alle Punkte die noch nicht vergeben sind werden in stehen in diesem Array.
+     * @return Alle Punkte, die noch nicht in der Arraylist erg vorhanden sind aber in der von orte, in einem int Array.
+     */
     //alle Punkte die nicht in der Route sind zurückgeben
     private int[] getUnusedPoints(ArrayList<Ort> orte, ArrayList<Ort> erg, int[] points) {
         int point = 0;
@@ -90,3 +112,4 @@ class NearestInsertion {
         return points;
     }
 }
+
