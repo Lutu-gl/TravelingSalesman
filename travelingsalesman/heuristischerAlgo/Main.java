@@ -10,8 +10,10 @@ public class Main {
         //Matrix Sachen
         Matrix matrix = new Matrix();
         //matrix.readMatrixFromFile("C:\\Users\\Megaport\\IdeaProjects\\TravelingSalesman\\travelingsalesman\\exakterAlgo\\MatrixFile5Orte.csv");
-        matrix.leseMatrixvonDatei("F:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\MatrixFile17Orte.csv"); //read the matrix
+        //matrix.leseMatrixvonDatei("F:\\Oberschule 4\\Technologie und Planung\\TravelingSalesman\\src\\travelingsalesman\\MatrixFile17Orte.csv"); //read the matrix
         //matrix.printMatrix();
+        matrix.leseMatrixvonCmd();
+        matrix.printMatrix();
 
         //Zeit parsen
         long maxZeitMilli = Long.parseLong(args[0]);
@@ -52,5 +54,8 @@ public class Main {
         double distance2 = dreiOpt.start(matrix, maxZeitMilli);
         System.out.println("ausgerechnete Distanz: " + distance2);
          */
+
+
+
     }
 }

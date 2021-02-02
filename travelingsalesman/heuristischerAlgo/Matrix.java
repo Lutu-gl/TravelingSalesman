@@ -3,6 +3,7 @@ package travelingsalesman.heuristischerAlgo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public final class Matrix {
@@ -44,6 +45,37 @@ public final class Matrix {
         }
 
         return true;
+    }
+
+    /**
+     * Einlesen der Matrix von der Konsole
+     */
+    public void leseMatrixvonCmd(){
+
+        int number_of_nodes;
+        Scanner scanner = null;
+        try {
+            System.out.println("Wieviele Punkte gibt es?");
+            scanner = new Scanner(System.in);
+            number_of_nodes = scanner.nextInt();
+            matrix = new double[number_of_nodes][number_of_nodes];
+            System.out.println("Gib jetzt die Matrix ein");
+            for (int i = 0; i <= number_of_nodes-1; i++) {
+                for (int j = 0; j <= number_of_nodes-1; j++) {
+                    matrix[i][j] = scanner.nextDouble();
+                }
+            }
+            for (int i = 0; i <= number_of_nodes-1; i++) {
+                for (int j = 0; j <= number_of_nodes-1; j++) {
+                    if (matrix[i][j] == 1 && matrix[j][i] == 0) {
+                        matrix[j][i] = 1;
+                    }
+                }
+            }
+        } catch (InputMismatchException inputMismatch) {
+            System.out.println("Falsches Eingabe Format");
+        }
+        scanner.close();
     }
 
     /**
